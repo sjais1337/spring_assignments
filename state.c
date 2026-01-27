@@ -3,9 +3,16 @@
 #include <stdio.h>
 
 void init_chip(state_ *state){
-    // TODO: Initialize the state of the program, such as stack pointers
-    // program counter, memory location (as they should be at the start)
-    // you might want to use functions such as memset.
+    state->sp = 0;
+    state->st = 0;
+    state->dt = 0;
+    state->pc = 0x200;
+
+    memset(state->V, 0, sizeof(state->V));
+    memset(state->stack, 0, sizeof(state->stack));
+    memset(state->keypad, 0, sizeof(state->keypad));
+    memset(state->display, 0, sizeof(state->display));
+    memset(state->memory, 0, sizeof(state->memory));
 
     uint8_t font_data[80] =  {
         0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -26,8 +33,9 @@ void init_chip(state_ *state){
         0xF0, 0x80, 0xF0, 0x80, 0x80, // F
     };
 
-    // TODO: Initialize the font data into a location which feels appro
-    // priate in the program memory
+    for(int i = 0; i < 80; i++){
+        state->memory[i] = font_data[i];
+    }
 }
 
 uint8_t map_key_to_chip8(char key){
