@@ -113,30 +113,7 @@ void inst_gen_rand_and(state_ *state, uint8_t x, uint8_t kk){
 }
 
 void inst_draw(state_ *state, uint8_t x, uint8_t y, uint8_t n){
-    uint8_t start_x = state->V[x] % 64;
-    uint8_t start_y = state->V[y] % 32;
-    state->V[0xF] = 0;
-
-    for(int row = 0; row < n; row++){
-        int curr_y = start_y + row;
-        if(curr_y >= 32) curr_y %= 32; 
-
-        uint8_t byte = state->memory[state->I+row];
-
-        for(int col = 0; col < 8; col++){
-            uint8_t pixel = (byte >> (7 - col)) & 1;
-            if(pixel){
-                int curr_x = start_x + col;
-                if(curr_x >= 64) curr_x %= 64; 
-
-                int index = curr_y*64 + curr_x;
-                if(state->display[index] == 1){
-                    state->V[0xF]=1;
-                }
-                state->display[index] ^= 1;
-            }
-        }
-    }
+    // TODO: Implement instruction
 }
 
 void inst_skip_pressed(state_ *state, uint8_t x){
